@@ -3,7 +3,8 @@ prime2=11527
 N=32
 seed=eval(input("Please input a number"))
 Sequence=set()
-for i in range(1000):
+while 1:
+    # h=len(Sequence)
     seed*=prime1
     seed+=prime2
     seed%=2**32
@@ -12,4 +13,4 @@ for i in range(1000):
     else:
         Sequence.add(seed)
 print(len(Sequence))
-print(Sequence)
+# print(Sequence)
