@@ -1,4 +1,6 @@
 from numpy import *
+import matplotlib.pyplot as plt
+
 class UV:
     def __init__(self,UV_name='Unnamed',UV_Xpositon=0,UV_Ypositon=0,UV_angle=0,UV_speed=1):
         self.name=UV_name;self.x=UV_Xpositon;self.y=UV_Ypositon;self.ang=UV_angle;self.v=UV_speed
@@ -12,11 +14,11 @@ class UV:
         print(f'Xpositon:{self.x}m,Yposition:{self.y}m')
         print(f'speed:{self.v}m/s,direction:{self.ang}')
     def monitor(self,target):###chanaged!
-        distance=sqrt((self.x-target.x)**2+(self.y+target.y)**2)
+        distance=sqrt((self.x-target.x)**2+(self.y-target.y)**2)
         target_angle=arctan2(target.y-self.y,target.x-self.x)*180/pi
         return distance,target_angle
 
-target=UV('Ohio_class_submarine',5000,5000,-90,10)
+target=UV('Ohio_class_submarine',5000,5000,-165,15)
 torpedo=UV('YU_6_torpedo',0,0,0,25)
 target.status();torpedo.status()
 dt=0.1;N=int(1000/dt)
@@ -32,3 +34,9 @@ for i in range(N):
         print(f'The {target.name} was sunk by {torpedo.name}')
         target.status();torpedo.status()
         break
+
+plt.plot(Xtarget[:i], Ytarget[:i], 'b*', Xtorpedo[:i], Ytorpedo[:i], 'r^')
+plt.title('Time taken%.0f[s],range consumed%.0f[m]'%(i*dt, i*dt*torpedo.v))
+plt.grid(True)
+plt.legend( [target.name, torpedo.name] )
+plt.show()
