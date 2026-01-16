@@ -8,7 +8,7 @@ class UV:
     def operation(self,target_angle):
         self.ang=target_angle
     def status(self):
-        print(f'Vehicle：{self.name}')
+        print(f'Vehicle：[{self.name}]')
         print(f'Xpositon:{self.x}m,Yposition:{self.y}m')
         print(f'speed:{self.v}m/s,direction:{self.ang}')
     def monitor(self,target):###chanaged!
@@ -16,4 +16,19 @@ class UV:
         target_angle=arctan2(target.y-self.y,target.x-self.x)*180/pi
         return distance,target_angle
 
-
+target=UV('Ohio_class_submarine',5000,5000,-90,10)
+torpedo=UV('YU_6_torpedo',0,0,0,25)
+target.status();torpedo.status()
+dt=0.1;N=int(1000/dt)
+Xtarget=zeros(N,dtype=float);Ytarget=Xtarget.copy()
+Xtorpedo=zeros(N,dtype=float);Ytorpedo=Xtorpedo.copy()
+for i in range(N):
+    Xtarget[i]=target.x;Ytarget[i]=target.y
+    Xtorpedo[i]=torpedo.x;Ytorpedo[i]=torpedo.y
+    dis,ang=torpedo.monitor(target)
+    torpedo.operation(ang)
+    torpedo.move(dt);target.move(dt)
+    if dis<10:
+        print(f'The {target.name} was sunk by {torpedo.name}')
+        target.status();torpedo.status()
+        break
