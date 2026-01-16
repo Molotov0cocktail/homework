@@ -24,10 +24,13 @@ class UV:
         target_angle=arctan2(target.y-self.y,target.x-self.x)*180/pi
         return distance,target_angle
 
-target=UV('Ohio_class_submarine',5000,5000,-180,15)
+target_dir=eval(input('target_dir='))
+target_spe=eval(input('target_spe='))
+ang_velo=eval(input('ang_velo='))
+target=UV('Ohio_class_submarine',5000,5000,target_dir,target_spe)
 torpedo=UV('YU_6_torpedo',0,0,0,25)
 target.status();torpedo.status()
-dt=0.1;N=int(1000/dt);ang_velo=10
+dt=0.1;N=int(3000/dt)
 Xtarget=zeros(N,dtype=float);Ytarget=Xtarget.copy()
 Xtorpedo=zeros(N,dtype=float);Ytorpedo=Xtorpedo.copy()
 for i in range(N):
@@ -46,4 +49,5 @@ plt.plot(Xtarget[:i], Ytarget[:i], 'b*', Xtorpedo[:i], Ytorpedo[:i], 'r^')
 plt.title('Time taken%.0f[s],range consumed%.0f[m]'%(i*dt, i*dt*torpedo.v))
 plt.grid(True)
 plt.legend( [target.name, torpedo.name] )
+plt.savefig('plt.png')
 plt.show()
