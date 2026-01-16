@@ -6,3 +6,7 @@ raw_parameter=np.random.randint(0,Class,size=N)
 onehot_encoding=np.zeros((N,Class),dtype=np.int32)
 onehot_encoding[np.arange(N),raw_parameter]=1
 print(onehot_encoding)
+# mask=onehot_encoding==1
+# print(mask)
+number_encoding=np.where(onehot_encoding==1)[1]
+print(number_encoding)
